@@ -6,15 +6,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.System.*;
 
 
 
 public class FillArray {
-    List<Person> personList;
+    List<Person> personList = new ArrayList<>();
 
     public List<Person> getPersonList() {
         return personList;
@@ -32,7 +31,7 @@ public class FillArray {
 
     public List<Person> readFile(String filePath) {
         List<Person> list = new ArrayList<>();
-        list.getClass().getFields();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null){
@@ -54,15 +53,66 @@ public class FillArray {
         return list;
     }
 
+    public List<String> readFileWithRandom(String filePath) {
+        List<String> arrayRandom = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null){
+                String[] parts = line.split(",");
+                for (String part : parts) {
+                    arrayRandom.add(part.replaceAll("\\s",""));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            out.println("Файл не найден!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return arrayRandom;
+    }
+
 
     public void FillArrayRandom() {
-        /*TODO: Изначально спрашивается скольок
-                       будет значнеий и после этого идет заполнение массива рандомно*/
+        String pathName = "src/main/java/ru/edu/data/randomName.txt";
+        String pathCity = "src/main/java/ru/edu/data/randomCity.txt";
+        Random random = new Random();
+        out.print("Какое кол-во данных будет вводиться: ");
+        Scanner scanner = new Scanner(in);
+        int count = scanner.nextInt();
+
+        List<String> randomName = readFileWithRandom(pathName);
+        List<String> randomCity = readFileWithRandom(pathCity);
+
+
+        for (int i = 0; i < count; i++) {
+            int randomIndexName = random.nextInt(randomName.size());
+            int randomIndexCity = random.nextInt(randomCity.size());
+            personList.add(new Person(randomName.get(randomIndexName),random.nextInt(1,100),randomCity.get(randomIndexCity)));
+        }
     }
 
     public void FillArrayScanner() {
-            /*TODO: Изначально спрашивается скольок
-                       будет значнеий и после этого идет заполнение массива через Scanner*/
+
+        out.print("Какое кол-во данных будет вводиться: ");
+        Scanner scanner = new Scanner(in);
+        int count = scanner.nextInt();
+        scanner.nextLine();
+        int sizePersonList = personList.size();
+        for (int i = sizePersonList; i < count+sizePersonList; i++) {
+
+            out.print("\n Введите имя для " + (i+1) + " элемента:");
+            String name = scanner.nextLine();
+
+            out.print("\n Введите возвраст для " + (i+1) + " элемента:");
+            int age = scanner.nextInt();
+            scanner.nextLine();
+
+            out.print("\n Введите город для " + (i+1) + " элемента:");
+            String city = scanner.nextLine();
+
+            personList.add(new Person(name,age,city));
+        }
     }
 }
 

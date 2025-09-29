@@ -52,7 +52,6 @@ public class UIInterface {
             try {
                 int itemFillArrayMenu = scannerItemFillArrayMenu.nextInt();
 
-
                 switch (itemFillArrayMenu) {
                     case 1: fillArray.FillArrayInFile(); break;
                     case 2: fillArray.FillArrayRandom(); break;
@@ -67,7 +66,27 @@ public class UIInterface {
     }
 
     public void printSortedArrayMenu() {
-        /*TODO: Меню сортировки массива*/
+        do {
+            out.println("Выберите способ сортировки: ");
+            out.println("1) Быстрая сортировка");
+            out.println("2) Сортировка слиянием");
+            out.println("3) Выйти в главное меню");
+            Scanner scannerItemSortArrayMenu = new Scanner(in);
+            out.print("Выберите действие: ");
+
+            try {
+                int itemSortArrayMenu = scannerItemSortArrayMenu.nextInt();
+                switch (itemSortArrayMenu) {
+                    case 1: /*Метод для быстрой сортировки*/ break;
+                    case 2: /*Метод для сортировка слияния*/  break;
+                    case 3: printMainMenu(); break;
+                    default: out.println("Данного значения нет в меню!");
+                }
+                // Исключение при вводе не числа
+            }  catch (InputMismatchException ex) {
+                out.println("Неккоретно введенно значение в меню!");
+            }
+        } while (true);
     }
 
     public void printSearchInArrayMenu(){
