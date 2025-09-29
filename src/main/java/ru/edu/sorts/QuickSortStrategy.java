@@ -1,19 +1,23 @@
 package ru.edu.sorts;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 
 public class QuickSortStrategy<T> implements SortStrategy<T> {
 
-
     /**
-     * Метод для сортировки массива способом "быстрой сортировки"
+     * Метод для сортировки коллекции способом "быстрой сортировки"
      *
-     * @param array      Массив объектов типа T
+     * @param collection Коллекция объектов типа T
      * @param comparator Объект, определяющий порядок сортировки
      */
     @Override
-    public void sort(T[] array, Comparator<T> comparator) {
+    public List<T> sort(Collection<T> collection, Comparator<T> comparator) {
+        T[] array = (T[]) collection.toArray();
         quickSort(array, 0, array.length - 1, comparator);
+        return Arrays.asList(array);
     }
 
     /**

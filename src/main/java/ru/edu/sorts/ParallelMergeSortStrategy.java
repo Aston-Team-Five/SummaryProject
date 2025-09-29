@@ -1,6 +1,9 @@
 package ru.edu.sorts;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
@@ -12,13 +15,15 @@ public class ParallelMergeSortStrategy<T> implements SortStrategy<T> {
     /**
      * Основной метод для параллельной сортировки слиянием
      *
-     * @param array      Исходный массив
+     * @param collection Исходная коллекция
      * @param comparator Объект, определяющий порядок сортировки
      */
     @Override
-    public void sort(T[] array, Comparator<T> comparator) {
-        // запускаем задачу в пуле потока
+    public List<T> sort(Collection<T> collection, Comparator<T> comparator) {
+        T[] array = (T[]) collection.toArray();
+        //запускаем задачу в пуле потока
         forkJoinPool.invoke(new MergeSortTask<>(array, 0, array.length - 1, comparator));
+        return Arrays.asList(array);
     }
 
     // Наследуем абстрактный класс, который не требует возвращаемого результата
