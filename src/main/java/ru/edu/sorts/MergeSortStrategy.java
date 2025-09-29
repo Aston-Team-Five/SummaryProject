@@ -1,20 +1,23 @@
 package ru.edu.sorts;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 
 public class MergeSortStrategy<T> implements SortStrategy<T> {
 
     /**
-     * Метод для сортировки массива способом "Сортировка слиянием"
+     * Метод для сортировки коллекции способом "Сортировка слиянием"
      *
-     * @param array      Исходный массив
+     * @param collection Исходная коллекция
      * @param comparator Объект, определяющий порядок сортировки
      */
     @Override
-    public void sort(T[] array, Comparator<T> comparator) {
-        if (array.length > 1) {
-            mergeSort(array, 0, array.length - 1, comparator);
-        }
+    public List<T> sort(Collection<T> collection, Comparator<T> comparator) {
+        T[] array = (T[]) collection.toArray();
+        mergeSort(array, 0, array.length - 1, comparator);
+        return Arrays.asList(array);
     }
 
     /**
@@ -86,3 +89,4 @@ public class MergeSortStrategy<T> implements SortStrategy<T> {
         }
     }
 }
+
