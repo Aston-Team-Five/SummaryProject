@@ -35,7 +35,7 @@ public class UIInterface {
                 out.println("Неккоретно введенно значение в меню!");
             }
             // Из меню можно выйти только если выбрать 4) Выход
-        } while (true);
+        } while (itemMainMenu != 4);
     }
 
     public void printFillArrayMenu() {
@@ -62,7 +62,7 @@ public class UIInterface {
             }  catch (InputMismatchException ex) {
                 out.println("Неккоретно введенно значение в меню!");
             }
-        } while (fillArray.getPersonList() == null);
+        } while (fillArray.getPersonList().isEmpty());
     }
 
     public void printSortedArrayMenu() {
@@ -90,7 +90,7 @@ public class UIInterface {
     }
 
     public void printSearchInArrayMenu(){
-        /*TODO: Меню поиска по массиву*/
+        /*TODO: Меню поиска по списку*/
     }
 
 }

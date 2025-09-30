@@ -23,7 +23,7 @@ public class FillArray {
         String path = "src/main/java/ru/edu/data/data.txt";
         personList = readFile(path);
         if (personList != null) {
-            for (Person person : personList){
+            for (Person person : personList) {
                 out.println(person);
             }
         }
@@ -34,13 +34,13 @@ public class FillArray {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
                     String name = parts[0];
                     int age = Integer.parseInt(parts[1]);
                     String city = parts[2];
-                    list.add(new Person(name,age,city));
+                    list.add(new Person(name, age, city));
                 } else {
                     err.println("Ошибка обработки строки: " + line);
                 }
@@ -58,10 +58,10 @@ public class FillArray {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 for (String part : parts) {
-                    arrayRandom.add(part.replaceAll("\\s",""));
+                    arrayRandom.add(part.replaceAll("\\s", ""));
                 }
             }
         } catch (FileNotFoundException e) {
@@ -77,42 +77,63 @@ public class FillArray {
         String pathName = "src/main/java/ru/edu/data/randomName.txt";
         String pathCity = "src/main/java/ru/edu/data/randomCity.txt";
         Random random = new Random();
-        out.print("Какое кол-во данных будет вводиться: ");
-        Scanner scanner = new Scanner(in);
-        int count = scanner.nextInt();
 
-        List<String> randomName = readFileWithRandom(pathName);
-        List<String> randomCity = readFileWithRandom(pathCity);
+        while (personList.isEmpty()) {
+            try {
+                out.print("Какое кол-во данных будет вводиться: ");
+                Scanner scanner = new Scanner(in);
+                int count = scanner.nextInt();
 
+                List<String> randomName = readFileWithRandom(pathName);
+                List<String> randomCity = readFileWithRandom(pathCity);
 
-        for (int i = 0; i < count; i++) {
-            int randomIndexName = random.nextInt(randomName.size());
-            int randomIndexCity = random.nextInt(randomCity.size());
-            personList.add(new Person(randomName.get(randomIndexName),random.nextInt(1,100),randomCity.get(randomIndexCity)));
+                for (int i = 0; i < count; i++) {
+                    int randomIndexName = random.nextInt(randomName.size());
+                    int randomIndexCity = random.nextInt(randomCity.size());
+                    personList.add(new Person(randomName.get(randomIndexName), random.nextInt(1, 123), randomCity.get(randomIndexCity)));
+                }
+            } catch (InputMismatchException ex) {
+                out.println("Неккоретно введенно значение!");
+            }
         }
     }
 
     public void FillArrayScanner() {
+        while (personList.isEmpty()) {
+            try {
+                out.print("Какое кол-во данных будет вводиться: ");
+                Scanner scanner = new Scanner(in);
+                int count = scanner.nextInt();
+                scanner.nextLine();
+                int age = 0;
+                int sizePersonList = personList.size();
+                for (int i = sizePersonList; i < count + sizePersonList; i++) {
 
-        out.print("Какое кол-во данных будет вводиться: ");
-        Scanner scanner = new Scanner(in);
-        int count = scanner.nextInt();
-        scanner.nextLine();
-        int sizePersonList = personList.size();
-        for (int i = sizePersonList; i < count+sizePersonList; i++) {
+                    out.print("\n Введите имя для " + (i + 1) + " элемента:");
+                    String name = scanner.nextLine();
 
-            out.print("\n Введите имя для " + (i+1) + " элемента:");
-            String name = scanner.nextLine();
+                    while (age == 0 || age > 123){
+                        try {
+                            out.print("\n Введите возвраст для " + (i + 1) + " элемента:");
+                            age = scanner.nextInt();
+                            scanner.nextLine();
+                            if (age > 123) {
+                                out.println("Возраст слишком большой!");
+                            }
+                        } catch (InputMismatchException ex) {
+                            out.println("Неккоретно введенно значение!");
+                            scanner.nextLine();
+                        }
+                    }
 
-            out.print("\n Введите возвраст для " + (i+1) + " элемента:");
-            int age = scanner.nextInt();
-            scanner.nextLine();
+                    out.print("\n Введите город для " + (i + 1) + " элемента:");
+                    String city = scanner.nextLine();
 
-            out.print("\n Введите город для " + (i+1) + " элемента:");
-            String city = scanner.nextLine();
-
-            personList.add(new Person(name,age,city));
+                    personList.add(new Person(name, age, city));
+                }
+            } catch (InputMismatchException ex) {
+                out.println("Неккоретно введенно значение!");
+            }
         }
     }
 }
-
