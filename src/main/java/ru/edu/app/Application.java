@@ -1,6 +1,6 @@
 package ru.edu.app;
 
-import uimenu.UIInterface;
+import ru.edu.uimenu.UIInterface;
 
 public class Application {
 

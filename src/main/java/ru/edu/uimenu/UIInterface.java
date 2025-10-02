@@ -1,5 +1,5 @@
-package uimenu;
-import data.FillArray;
+package ru.edu.uimenu;
+import ru.edu.data.FillArray;
 import java.util.*;
 
 import static java.lang.System.*;
