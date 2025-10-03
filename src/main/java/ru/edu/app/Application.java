@@ -1,12 +1,12 @@
 package ru.edu.app;
 
-import uimenu.UIInterface;
-
 public class Application {
 
     public void run() {
-        UIInterface uiInterface = new UIInterface();
-        uiInterface.printMainMenu();
+        AppContext appContext = new AppContext();
+        appContext.process();
+/*        UIInterface uiInterface = new UIInterface();
+        uiInterface.printMainMenu();*/
     }
 
 }

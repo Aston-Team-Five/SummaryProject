@@ -1,4 +1,4 @@
-package model;
+package ru.edu.model;
 
 public class Person {
 
