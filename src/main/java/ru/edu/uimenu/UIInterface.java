@@ -1,11 +1,17 @@
-package uimenu;
-import data.FillArray;
-import java.util.*;
+package ru.edu.uimenu;
 
-import static java.lang.System.*;
+import ru.edu.data.FillArray;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import static java.lang.System.exit;
+import static java.lang.System.in;
+import static java.lang.System.out;
 
 public class UIInterface {
     FillArray fillArray = new FillArray();
+
     public void printMainMenu() {
         int itemMainMenu = 0;
         do {
@@ -59,7 +65,7 @@ public class UIInterface {
                     default: out.println("Данного значения нет в меню!");
                 }
                 // Исключение при вводе не числа
-            }  catch (InputMismatchException ex) {
+            } catch (InputMismatchException ex) {
                 out.println("Неккоретно введенно значение в меню!");
             }
         } while (fillArray.getPersonList().isEmpty());
@@ -83,13 +89,13 @@ public class UIInterface {
                     default: out.println("Данного значения нет в меню!");
                 }
                 // Исключение при вводе не числа
-            }  catch (InputMismatchException ex) {
+            } catch (InputMismatchException ex) {
                 out.println("Неккоретно введенно значение в меню!");
             }
         } while (true);
     }
 
-    public void printSearchInArrayMenu(){
+    public void printSearchInArrayMenu() {
         /*TODO: Меню поиска по списку*/
     }
 

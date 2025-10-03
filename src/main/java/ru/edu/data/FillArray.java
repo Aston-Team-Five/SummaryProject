@@ -1,6 +1,6 @@
-package data;
+package ru.edu.data;
 
-import model.Person;
+import ru.edu.model.Person;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
