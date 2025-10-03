@@ -34,22 +34,65 @@ public class FillArray {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            int lineNumber = 0;
+            int successCount = 0;
+            int errorCount = 0;
+
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    String name = parts[0];
-                    int age = Integer.parseInt(parts[1]);
-                    String city = parts[2];
-                    list.add(new Person(name, age, city));
-                } else {
-                    err.println("Ошибка обработки строки: " + line);
+                lineNumber++;
+
+                // Пропускаем пустые строки
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                try {
+                    String[] parts = line.split(",");
+                    if (parts.length == 3) {
+                        String name = parts[0].trim();
+                        int age = Integer.parseInt(parts[1].trim());
+                        String city = parts[2].trim();
+
+                        // 🔥 ИСПОЛЬЗУЕМ BUILDER С ВАЛИДАЦИЕЙ
+                        Person person = Person.builder()
+                                .setName(name)
+                                .setAge(age)
+                                .setCity(city)
+                                .build(); // Валидация происходит здесь!
+
+                        list.add(person);
+                        successCount++;
+
+                    } else {
+                        err.println("🚨 Ошибка формата в строке " + lineNumber + ": " + line);
+                        err.println("   Ожидается формат: имя,возраст,город");
+                        errorCount++;
+                    }
+
+                } catch (NumberFormatException e) {
+                    err.println("🚨 Ошибка числа в строке " + lineNumber + ": " + line);
+                    err.println("   Возраст должен быть числом");
+                    errorCount++;
+
+                } catch (IllegalArgumentException e) {
+                    err.println("🚨 Ошибка валидации в строке " + lineNumber + ": " + line);
+                    err.println("   " + e.getMessage());
+                    errorCount++;
                 }
             }
+
+            // Статистика
+            out.println(" Результаты чтения файла:");
+            out.println(" Успешно загружено: " + successCount + " записей");
+            out.println(" Ошибок обработки: " + errorCount + " записей");
+            out.println(" Всего строк в файле: " + lineNumber);
+
         } catch (FileNotFoundException e) {
-            out.println("Файл не найден!");
+            out.println("❌ Файл не найден: " + filePath);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка чтения файла", e);
         }
+
         return list;
     }
 
@@ -90,10 +133,21 @@ public class FillArray {
                 for (int i = 0; i < count; i++) {
                     int randomIndexName = random.nextInt(randomName.size());
                     int randomIndexCity = random.nextInt(randomCity.size());
-                    personList.add(new Person(randomName.get(randomIndexName), random.nextInt(1, 123), randomCity.get(randomIndexCity)));
+                    // personList.add(new Person(randomName.get(randomIndexName), random.nextInt(1, 123), randomCity.get(randomIndexCity)));
+
+                    //  (используем Builder):
+                    Person person = Person.builder()
+                            .setName(randomName.get(randomIndexName))
+                            .setAge(random.nextInt(1, 123))
+                            .setCity(randomCity.get(randomIndexCity))
+                            .build();
+
+                    personList.add(person);
                 }
             } catch (InputMismatchException ex) {
                 out.println("Неккоретно введенно значение!");
+            } catch (IllegalArgumentException e) {
+                out.println("Ошибка создания Person: " + e.getMessage());
             }
         }
     }
@@ -129,7 +183,23 @@ public class FillArray {
                     out.print("\n Введите город для " + (i + 1) + " элемента:");
                     String city = scanner.nextLine();
 
-                    personList.add(new Person(name, age, city));
+                    // personList.add(new Person(name, age, city));
+
+                    // (используем Builder):
+                    try {
+                        Person person = Person.builder()
+                                .setName(name)
+                                .setAge(age)
+                                .setCity(city)
+                                .build();
+
+                        personList.add(person);
+                    } catch (IllegalArgumentException e) {
+                        out.println("Ошибка: " + e.getMessage());
+                        i--; // Повторить ввод для этого элемента
+                    }
+
+                    age = 0; // Сброс возраста для следующей итерации
                 }
             } catch (InputMismatchException ex) {
                 out.println("Неккоретно введенно значение!");
