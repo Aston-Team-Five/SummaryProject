@@ -49,6 +49,8 @@ abstract class AbstractSimpleMenuState implements StateSimpleMenu {
         throw new IllegalStateException("Не найдено действие с номером " + choice);
     }
 
+
+
     abstract List<StateMenuItem> getNextStates();
 
     protected final Supplier<Integer> getUserChoiceSupplier() {
