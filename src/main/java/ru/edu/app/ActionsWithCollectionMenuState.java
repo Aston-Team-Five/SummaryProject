@@ -13,7 +13,7 @@ class ActionsWithCollectionMenuState extends AbstractSimpleMenuState {
             new FinishedState(),
             new PrintCollectionState(),
             new ChooseSortTypeMenuState(getUserChoiceSupplier()),
-            new FindElementInCollectionState()
+            new FindElementInCollectionState(new AppContext())
     );
 
 

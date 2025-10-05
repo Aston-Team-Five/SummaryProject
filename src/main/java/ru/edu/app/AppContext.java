@@ -6,6 +6,7 @@ import ru.edu.sorts.SortStrategy;
 import ru.edu.util.SimpleLinkedList;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
@@ -96,5 +97,45 @@ final class AppContext {
         }
         return String.join(", ", fieldNamesToSortBy);
     }
+    //find
+    Comparator<Object> currentComparator;
+    public Comparator<Object> getCurrentComparator() {
 
+        return currentComparator;
+    }
+    private Class<?> currentClass;
+    public Object parseInputToObject(String input) {
+        if (currentClass == null) {
+            System.out.println("⚠ Класс коллекции не задан. Невозможно преобразовать ввод.");
+            return null;
+        }
+
+        try {
+            // Если коллекция содержит простые типы
+            if (currentClass == String.class) {
+                return input;
+            }
+            if (currentClass == Integer.class) {
+                return Integer.parseInt(input);
+            }
+            if (currentClass == Double.class) {
+                return Double.parseDouble(input);
+            }
+
+            // Если это пользовательский класс — ищем конструктор с одним String
+            try {
+                return currentClass.getConstructor(String.class).newInstance(input);
+            } catch (NoSuchMethodException e) {
+                // Если такого конструктора нет — пробуем без аргументов
+                Object obj = currentClass.getDeclaredConstructor().newInstance();
+                System.out.println("⚠ Не найден конструктор(String). Используется пустой объект: " + obj);
+                return obj;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Ошибка преобразования строки в объект типа " + currentClass.getSimpleName());
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
