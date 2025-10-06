@@ -8,6 +8,12 @@ public class Person implements Comparable<Person> {
     private final int age;
     private final String city;
 
+    private Person(String name, int age, String city) {
+        this.name = name;
+        this.age = age;
+        this.city = city;
+    }
+
     // Приватный конструктор - только Builder может создавать объекты
     private Person(Builder builder) {
         this.name = builder.name;

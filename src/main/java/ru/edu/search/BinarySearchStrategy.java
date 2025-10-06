@@ -1,23 +1,24 @@
 package ru.edu.search;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Collection;
 
 public class BinarySearchStrategy<T> implements SearchStrategy<T> {
 
     @Override
-    public int search(List<T> list, T target, Comparator<T> comparator) {
-        if (list == null || list.isEmpty() || target == null) {
+    public int search(Collection<T> collection, T target) {
+        if (collection == null || collection.isEmpty() || target == null) {
             return -1;
         }
 
+        T[] collectionArray = (T[]) collection.toArray();
+
         int left = 0;
-        int right = list.size() - 1;
+        int right = collectionArray.length - 1;
 
         while (left <= right) {
             int mid = (left + right) / 2;
-            T midValue = list.get(mid);
-            int cmp = comparator.compare(midValue, target);
+            T midValue = collectionArray[mid];
+            int cmp = ((Comparable<T>) midValue).compareTo(target);
 
             if (cmp == 0) {
                 return mid; // элемент найден

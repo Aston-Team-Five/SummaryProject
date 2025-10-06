@@ -6,7 +6,6 @@ import ru.edu.sorts.SortStrategy;
 import ru.edu.util.SimpleLinkedList;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
@@ -24,12 +23,12 @@ final class AppContext {
     private Collection<String> fieldNamesToSortBy;
 
     public AppContext() {
-        scanner = new Scanner(System.in);
-        userChoiceSupplier = new UserChoiceSupplier(scanner);
-        userStringInputSupplier = new UserStringInputSupplier(scanner);
-        currentState = new StartState(userChoiceSupplier);
-        collection = new SimpleLinkedList<>();
-        fieldNamesToSortBy = new SimpleLinkedList<>();
+        this.scanner = new Scanner(System.in);
+        this.userChoiceSupplier = new UserChoiceSupplier(scanner);
+        this.userStringInputSupplier = new UserStringInputSupplier(scanner);
+        this.currentState = new StartState(userChoiceSupplier);
+        this.collection = new SimpleLinkedList<>();
+        this.fieldNamesToSortBy = new SimpleLinkedList<>();
     }
 
     public void process() {
@@ -74,6 +73,10 @@ final class AppContext {
         return collection;
     }
 
+    public void setCollection(Collection<Object> collection) {
+        this.collection = collection;
+    }
+
     public int getCollectionMaxSize() {
         return collectionMaxSize;
     }
@@ -97,45 +100,5 @@ final class AppContext {
         }
         return String.join(", ", fieldNamesToSortBy);
     }
-    //find
-    Comparator<Object> currentComparator;
-    public Comparator<Object> getCurrentComparator() {
 
-        return currentComparator;
-    }
-    //private Class<?> genericType;
-    public Object parseInputToObject(String input) {
-        if (genericType == null) {
-            System.out.println("⚠ Класс коллекции не задан. Невозможно преобразовать ввод.");
-            return null;
-        }
-
-        try {
-            // Если коллекция содержит простые типы
-            if (genericType == String.class) {
-                return input;
-            }
-            if (genericType == Integer.class) {
-                return Integer.parseInt(input);
-            }
-            if (genericType == Double.class) {
-                return Double.parseDouble(input);
-            }
-
-            // Если это пользовательский класс — ищем конструктор с одним String
-            try {
-                return genericType.getConstructor(String.class).newInstance(input);
-            } catch (NoSuchMethodException e) {
-                // Если такого конструктора нет — пробуем без аргументов
-                Object obj = genericType.getDeclaredConstructor().newInstance();
-                System.out.println("⚠ Не найден конструктор(String). Используется пустой объект: " + obj);
-                return obj;
-            }
-
-        } catch (Exception e) {
-            System.out.println("Ошибка преобразования строки в объект типа " + genericType.getSimpleName());
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

@@ -1,19 +1,19 @@
 package ru.edu.search;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Collection;
 
 public class SearchContext<T> {
+
     private SearchStrategy<T> strategy;
 
     public void setStrategy(SearchStrategy<T> strategy) {
         this.strategy = strategy;
     }
 
-    public int executeSearch(List<T> list, T target, Comparator<T> comparator) {
+    public int executeSearch(Collection<T> collection, T target) {
         if (strategy == null) {
             throw new IllegalStateException("Search strategy is not set");
         }
-        return strategy.search(list, target, comparator);
+        return strategy.search(collection, target);
     }
 }
