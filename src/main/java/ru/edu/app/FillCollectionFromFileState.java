@@ -1,5 +1,7 @@
 package ru.edu.app;
 
+import ru.edu.data.FillArray;
+
 class FillCollectionFromFileState implements StateMenuItem {
 
     @Override
@@ -9,8 +11,13 @@ class FillCollectionFromFileState implements StateMenuItem {
 
     @Override
     public void process(AppContext context) {
-        // TODO
-        System.out.println("Не реализовано");
-        context.setCurrentState(new FillCollectionState(context.getUserChoiceSupplier()));
+        FillArray fillArray = new FillArray();
+        fillArray.FillArrayInFile(); // Используем стандартный путь к файлу
+
+        context.getCollection().addAll(fillArray.getPersonList());
+        System.out.println("✅ Загружено " + fillArray.getPersonList().size() + " записей из файла");
+
+        // 🔥 ПЕРЕНАПРАВЛЯЕМ К МАНИПУЛЯЦИЯМ С КОЛЛЕКЦИЕЙ
+        context.setCurrentState(new ActionsWithCollectionMenuState(context.getUserChoiceSupplier()));
     }
 }

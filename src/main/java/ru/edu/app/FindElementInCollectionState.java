@@ -4,14 +4,16 @@ class FindElementInCollectionState implements StateMenuItem {
 
     @Override
     public String getSelectionText() {
-        return "Поиск элемента в коллекции";
+        return "ВЫЗОВ РЕДАКТОРА";
     }
 
     @Override
     public void process(AppContext context) {
-        // TODO
-        System.out.println("Не реализовано");
+
+        EditCollectionState editor = new EditCollectionState();
+        editor.process(context);
+
+        // После редактирования возвращаемся в меню манипуляций
         context.setCurrentState(new ActionsWithCollectionMenuState(context.getUserChoiceSupplier()));
     }
-    
 }

@@ -16,8 +16,12 @@ class ActionsWithCollectionMenuState extends AbstractSimpleMenuState {
             new FindElementInCollectionState()
     );
 
+
+
     @Override
     List<StateMenuItem> getNextStates() {
         return nextStates;
     }
 }
+
+

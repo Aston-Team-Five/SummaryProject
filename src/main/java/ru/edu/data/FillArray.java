@@ -154,6 +154,7 @@ public class FillArray {
 
     public void FillArrayScanner() {
         while (personList.isEmpty()) {
+
             try {
                 out.print("Какое кол-во данных будет вводиться: ");
                 Scanner scanner = new Scanner(in);
