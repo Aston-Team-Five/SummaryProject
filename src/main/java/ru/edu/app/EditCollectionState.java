@@ -37,6 +37,7 @@ class EditCollectionState implements StateMenuItem {
             System.out.println("4. Удалить элемент");
             System.out.println("5. Очистить коллекцию");
             System.out.println("6. Сохранить изменения и выйти");
+            System.out.println("7. Многопоточный подсчет");
             System.out.println("0. Выйти без сохранения");
 
             System.out.print("Выберите действие: ");
@@ -61,6 +62,10 @@ class EditCollectionState implements StateMenuItem {
                 case "6":
                     saveChanges(context, editableList);
                     continueEditing = false;
+                    break;
+                case "7":
+                    MultiThreadedCountState multiThreadedSearch = new MultiThreadedCountState();
+                    multiThreadedSearch.process(context);
                     break;
                 case "0":
                     System.out.println("❌ Изменения не сохранены");
