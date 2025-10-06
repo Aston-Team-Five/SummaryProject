@@ -23,12 +23,12 @@ final class AppContext {
     private Collection<String> fieldNamesToSortBy;
 
     public AppContext() {
-        scanner = new Scanner(System.in);
-        userChoiceSupplier = new UserChoiceSupplier(scanner);
-        userStringInputSupplier = new UserStringInputSupplier(scanner);
-        currentState = new StartState(userChoiceSupplier);
-        collection = new SimpleLinkedList<>();
-        fieldNamesToSortBy = new SimpleLinkedList<>();
+        this.scanner = new Scanner(System.in);
+        this.userChoiceSupplier = new UserChoiceSupplier(scanner);
+        this.userStringInputSupplier = new UserStringInputSupplier(scanner);
+        this.currentState = new StartState(userChoiceSupplier);
+        this.collection = new SimpleLinkedList<>();
+        this.fieldNamesToSortBy = new SimpleLinkedList<>();
     }
 
     public void process() {
@@ -71,6 +71,10 @@ final class AppContext {
 
     public Collection<Object> getCollection() {
         return collection;
+    }
+
+    public void setCollection(Collection<Object> collection) {
+        this.collection = collection;
     }
 
     public int getCollectionMaxSize() {

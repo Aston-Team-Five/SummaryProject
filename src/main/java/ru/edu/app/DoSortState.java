@@ -17,7 +17,8 @@ class DoSortState implements State {
         } else {
             System.out.println("Выполнение сортировки по полям: " + context.getFieldNamesToSortByAsString() + " ...");
             try {
-                Collection<?> sorted = doSort(context);
+                Collection sorted = doSort(context);
+                context.setCollection(sorted);
                 System.out.println("Готово");
                 printCollection(sorted);
             } catch (Exception e) {

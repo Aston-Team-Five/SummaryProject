@@ -2,7 +2,7 @@ package ru.edu.model;
 
 import java.util.Objects;
 
-public class Table {
+public class Table implements Comparable<Table> {
 
     private String color;
 
@@ -27,6 +27,15 @@ public class Table {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    @Override
+    public int compareTo(Table o) {
+        if (this.height == o.height) {
+            return this.color.compareTo(o.color);
+        } else {
+            return this.height - o.height;
+        }
     }
 
     @Override
