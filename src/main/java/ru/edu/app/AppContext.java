@@ -103,37 +103,37 @@ final class AppContext {
 
         return currentComparator;
     }
-    private Class<?> currentClass;
+    //private Class<?> genericType;
     public Object parseInputToObject(String input) {
-        if (currentClass == null) {
+        if (genericType == null) {
             System.out.println("⚠ Класс коллекции не задан. Невозможно преобразовать ввод.");
             return null;
         }
 
         try {
             // Если коллекция содержит простые типы
-            if (currentClass == String.class) {
+            if (genericType == String.class) {
                 return input;
             }
-            if (currentClass == Integer.class) {
+            if (genericType == Integer.class) {
                 return Integer.parseInt(input);
             }
-            if (currentClass == Double.class) {
+            if (genericType == Double.class) {
                 return Double.parseDouble(input);
             }
 
             // Если это пользовательский класс — ищем конструктор с одним String
             try {
-                return currentClass.getConstructor(String.class).newInstance(input);
+                return genericType.getConstructor(String.class).newInstance(input);
             } catch (NoSuchMethodException e) {
                 // Если такого конструктора нет — пробуем без аргументов
-                Object obj = currentClass.getDeclaredConstructor().newInstance();
+                Object obj = genericType.getDeclaredConstructor().newInstance();
                 System.out.println("⚠ Не найден конструктор(String). Используется пустой объект: " + obj);
                 return obj;
             }
 
         } catch (Exception e) {
-            System.out.println("Ошибка преобразования строки в объект типа " + currentClass.getSimpleName());
+            System.out.println("Ошибка преобразования строки в объект типа " + genericType.getSimpleName());
             e.printStackTrace();
             return null;
         }
