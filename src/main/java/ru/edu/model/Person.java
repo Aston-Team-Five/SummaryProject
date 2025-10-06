@@ -1,6 +1,9 @@
 package ru.edu.model;
 
-public class Person {
+import java.util.Objects;
+
+public class Person implements Comparable<Person> {
+
     private final String name;
     private final int age;
     private final String city;
@@ -13,13 +16,47 @@ public class Person {
     }
 
     // Геттеры (без сеттеров - объект неизменяемый)
-    public String getName() { return name; }
-    public int getAge() { return age; }
-    public String getCity() { return city; }
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getCity() {
+        return city;
+    }
 
     @Override
     public String toString() {
         return String.format("Person{name='%s', age=%d, city='%s'}", name, age, city);
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        if (this.age == o.age) {
+            if (this.name.equals(o.name)) {
+                return this.city.compareTo(o.city);
+            } else {
+                return this.name.compareTo(o.name);
+            }
+        } else {
+            return this.age - o.age;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age && Objects.equals(name, person.name) && Objects.equals(city, person.city);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age, city);
     }
 
     // Static Builder класс

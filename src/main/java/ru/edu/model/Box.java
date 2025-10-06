@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Immutable box
  */
-public final class Box {
+public final class Box implements Comparable<Box> {
 
     public static Box getSingleBox() {
         return new Box(1, 1, 1);
@@ -57,6 +57,13 @@ public final class Box {
                 ", height=" + height +
                 ", depth=" + depth +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Box o) {
+        int thisVolume = width * height * depth;
+        int thatVolume = o.width * o.height * o.depth;
+        return thisVolume - thatVolume;
     }
 
     public static final class Builder {
